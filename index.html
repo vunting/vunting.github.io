@@ -45,25 +45,30 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 10; /* Ensure it's on top */
-            opacity: 0.5; /* 50% transparent */
+            z-index: 10;
+            opacity: 0.5;
         }
         .click-counter {
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 2rem; /* Increased font size */
+            font-size: 2rem;
             font-weight: bold;
             color: black;
         }
     </style>
 </head>
 <body>
-    <audio id="background-music" src="https://cdn.discordapp.com/attachments/1320108357780111431/1353150576065515641/youtube_vs23rWUl2vo_audio.mp3?ex=67e09b2d&is=67df49ad&hm=c4bc9682de55a3f1535011dd6f[..."></audio>
+    <audio id="background-music" loop>
+        <source src="youtube_vs23rWUl2vo_audio.mp3" type="audio/mpeg">
+    </audio>
+
     <div class="center-text">click 30 times</div>
     <div class="click-counter">0/30</div>
+
     <script>
         let clickCount = 0;
+        const audio = document.getElementById("background-music");
 
         function moveElement(element) {
             let x = parseFloat(element.style.left) || 0;
@@ -107,23 +112,16 @@
         document.body.addEventListener('click', () => {
             clickCount++;
 
-            // Update click counter
             document.querySelector('.click-counter').textContent = `${clickCount}/30`;
 
             if (clickCount === 30) {
-                // Clear all images and text
                 document.body.innerHTML = '';
-
-                // Change background to "you're actually rich"
                 document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
                 document.body.style.backgroundSize = 'cover';
                 document.body.style.backgroundPosition = 'center';
                 document.body.style.backgroundRepeat = 'no-repeat';
-
-                // Spawn 10 "you're actually rich" images
                 spawnRichImages();
             } else {
-                // Display image
                 const randomImage = document.createElement('div');
                 randomImage.classList.add('random-image');
                 randomImage.style.backgroundImage = 'url(https://mypetsays.co.uk/cdn/shop/articles/interesting_facts_about_most_popular_dog_breeds.jpg?v=1632717550&width=1500)';
@@ -135,7 +133,6 @@
                 randomImage.style.left = `${xImage}px`;
                 randomImage.style.top = `${yImage}px`;
 
-                // Display text on the image
                 const randomText = document.createElement('div');
                 randomText.classList.add('random-text');
                 randomText.textContent = "you're poor lol";
@@ -147,32 +144,38 @@
                 randomText.style.height = '100%';
                 randomText.style.width = '100%';
 
-                // Move the image and text
                 moveElement(randomImage);
             }
         });
 
-        // Detect when the page is hidden
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') {
-                // Clear all images and text
                 document.body.innerHTML = '';
 
-                // Add the "you're actually rich" text
                 const richText = document.createElement('div');
                 richText.classList.add('rich-text');
                 richText.textContent = "you're actually rich";
                 document.body.appendChild(richText);
 
-                // Change background to "you're actually rich"
                 document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
                 document.body.style.backgroundSize = 'cover';
                 document.body.style.backgroundPosition = 'center';
                 document.body.style.backgroundRepeat = 'no-repeat';
 
-                // Spawn 10 "you're actually rich" images
                 spawnRichImages();
             }
+        });
+
+        // Autoplay workaround: Wait for user interaction
+        document.addEventListener("click", () => {
+            if (audio.paused) {
+                audio.play().catch(error => console.log("Autoplay blocked:", error));
+            }
+        });
+
+        // Try to play audio once page loads
+        window.addEventListener("load", () => {
+            audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
         });
     </script>
 </body>
