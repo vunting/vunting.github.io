@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOM is Rich</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); /* Weird font */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
         
         body {
             margin: 0;
@@ -17,7 +18,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
             position: relative;
             overflow: hidden;
             user-select: none; /* Prevent text selection */
@@ -29,6 +30,7 @@
             z-index: 20; /* Bring to front */
             position: absolute;
             top: 40%; /* Position higher */
+            font-family: 'Montserrat', sans-serif;
         }
         .random-text {
             position: absolute;
@@ -47,7 +49,7 @@
             animation: fadeIn 1s ease-in-out forwards;
         }
         .rich-text {
-            font-family: 'Press Start 2P', cursive; /* Use weird font */
+            font-family: 'Montserrat', sans-serif; /* Use better font */
             font-size: 5rem;
             color: white; /* Change text color to white */
             font-weight: bold;
@@ -68,6 +70,7 @@
             font-size: 2rem;
             font-weight: bold;
             color: white; /* Change text color to white */
+            font-family: 'Montserrat', sans-serif;
         }
         .timer-overlay {
             position: fixed;
@@ -93,6 +96,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .top-right-text {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            text-align: right;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
         }
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.5); }
@@ -194,6 +205,10 @@
         <div class="timer-circle">
             <span class="timer">15</span>
         </div>
+    </div>
+    <div class="top-right-text">
+        <p>discord.gg/cumgirl</p>
+        <p>afnmgfdggdfresad on discord</p>
     </div>
 
     <script>
@@ -327,36 +342,13 @@
             clickCount++;
             const clickCounter = document.querySelector('.click-counter');
             clickCounter.textContent = `${clickCount}/40`;
-            clickCounter.style.animation = 'heartbeat 0.3s';
-            setTimeout(() => {
-                clickCounter.style.animation = 'none';
-            }, 300);
 
             if (clickCount === 40) {
                 document.querySelector('.center-text').remove();
                 document.querySelector('.click-counter').remove();
                 startTimer();
             } else {
-                const randomImage = document.createElement('div');
-                randomImage.classList.add('random-image');
-                randomImage.style.backgroundImage = 'url(https://mypetsays.co.uk/cdn/shop/articles/interesting_facts_about_most_popular_dog_breeds.jpg?v=1632717550&width=1500)';
-                document.body.appendChild(randomImage);
-
-                randomImage.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
-                randomImage.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
-
-                const randomText = document.createElement('div');
-                randomText.classList.add('random-text');
-                randomText.textContent = "you're poor lol";
-                randomImage.appendChild(randomText);
-
-                randomText.style.display = 'flex';
-                randomText.style.alignItems = 'center';
-                randomText.style.justifyContent = 'center';
-                randomText.style.height = '100%';
-                randomText.style.width = '100%';
-
-                moveElement(randomImage);
+                spawnConfetti();
             }
         });
 
