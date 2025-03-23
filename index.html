@@ -56,6 +56,20 @@
             font-weight: bold;
             color: black;
         }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        .animate-spin {
+            animation: spin 2s linear infinite;
+        }
     </style>
 </head>
 <body>
@@ -96,7 +110,7 @@
         function spawnRichImages() {
             for (let i = 0; i < 10; i++) {
                 const richImage = document.createElement('div');
-                richImage.classList.add('random-image');
+                richImage.classList.add('random-image', 'animate-fade-in');
                 richImage.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
                 document.body.appendChild(richImage);
 
@@ -120,7 +134,7 @@
                 spawnRichImages();
             } else {
                 const randomImage = document.createElement('div');
-                randomImage.classList.add('random-image');
+                randomImage.classList.add('random-image', 'animate-fade-in');
                 randomImage.style.backgroundImage = 'url(https://mypetsays.co.uk/cdn/shop/articles/interesting_facts_about_most_popular_dog_breeds.jpg?v=1632717550&width=1500)';
                 document.body.appendChild(randomImage);
 
@@ -128,7 +142,7 @@
                 randomImage.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
 
                 const randomText = document.createElement('div');
-                randomText.classList.add('random-text');
+                randomText.classList.add('random-text', 'animate-fade-in');
                 randomText.textContent = "you're poor lol";
                 randomImage.appendChild(randomText);
 
@@ -144,11 +158,14 @@
 
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') {
-                wasPlaying = !audio.paused; // Store whether music was playing
-            } else {
-                if (wasPlaying) {
-                    audio.play().catch(error => console.log("Autoplay blocked:", error));
+                if (!audio.paused) {
+                    wasPlaying = true;
+                    audio.pause();
+                } else {
+                    wasPlaying = false;
                 }
+            } else if (wasPlaying) {
+                audio.play().catch(error => console.log("Autoplay blocked:", error));
             }
         });
 
