@@ -16,6 +16,7 @@
             font-family: Arial, sans-serif;
             position: relative;
             overflow: hidden;
+            user-select: none; /* Prevent text selection */
         }
         .center-text {
             font-size: 1.5rem;
@@ -79,6 +80,14 @@
             0% { transform: translateY(-100vh); }
             100% { transform: translateY(100vh); }
         }
+        @keyframes slideIn {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(0); }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
         .animate-shake {
             animation: shake 0.5s;
             animation-iteration-count: infinite;
@@ -90,6 +99,26 @@
             background-color: red;
             opacity: 0.7;
             animation: confettiFall 3s linear infinite;
+        }
+        .slide-in {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            animation: slideIn 1s ease-in-out;
+        }
+        .pop-in {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3rem;
+            font-weight: bold;
+            color: yellow;
+            animation: popIn 1s ease-in-out;
         }
     </style>
 </head>
@@ -155,6 +184,20 @@
             }
         }
 
+        function addSlideInText() {
+            const slideText = document.createElement('div');
+            slideText.classList.add('slide-in');
+            slideText.textContent = "Congratulations!";
+            document.body.appendChild(slideText);
+        }
+
+        function addPopInText() {
+            const popText = document.createElement('div');
+            popText.classList.add('pop-in');
+            popText.textContent = "You did it!";
+            document.body.appendChild(popText);
+        }
+
         function continueMusic() {
             if (audio.paused && wasPlaying) {
                 audio.play().catch(error => console.log("Autoplay blocked:", error));
@@ -184,9 +227,16 @@
                     document.body.classList.remove('animate-shake');
                     newText.style.opacity = 1;
                     spawnConfetti();
+                    addSlideInText();
+                    addPopInText();
                 }, 2000);
 
                 spawnRichImages();
+
+                // Ensure the audio continues playing without restarting
+                if (audio.paused) {
+                    audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
+                }
             } else {
                 const randomImage = document.createElement('div');
                 randomImage.classList.add('random-image');
