@@ -35,6 +35,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
         }
         .rich-text {
             font-size: 5rem;
@@ -59,16 +61,6 @@
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 1s ease-in-out;
-        }
-        .animate-spin {
-            animation: spin 2s linear infinite;
         }
     </style>
 </head>
@@ -110,7 +102,7 @@
         function spawnRichImages() {
             for (let i = 0; i < 10; i++) {
                 const richImage = document.createElement('div');
-                richImage.classList.add('random-image', 'animate-fade-in');
+                richImage.classList.add('random-image');
                 richImage.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
                 document.body.appendChild(richImage);
 
@@ -134,7 +126,7 @@
                 spawnRichImages();
             } else {
                 const randomImage = document.createElement('div');
-                randomImage.classList.add('random-image', 'animate-fade-in');
+                randomImage.classList.add('random-image');
                 randomImage.style.backgroundImage = 'url(https://mypetsays.co.uk/cdn/shop/articles/interesting_facts_about_most_popular_dog_breeds.jpg?v=1632717550&width=1500)';
                 document.body.appendChild(randomImage);
 
