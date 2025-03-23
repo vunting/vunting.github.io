@@ -225,7 +225,7 @@
         }
         .important-message {
             position: absolute;
-            bottom: 100px; /* Adjust this value to move the text up or down */
+            top: 20px; /* Position the text at the top */
             left: 50%;
             transform: translateX(-50%);
             color: white;
@@ -367,6 +367,11 @@
             document.body.classList.remove('animate-shake');
             document.body.innerHTML = ''; // Remove all other elements
 
+            const importantMessage = document.createElement('div');
+            importantMessage.classList.add('important-message');
+            importantMessage.textContent = "I have every single one of your passwords";
+            document.body.appendChild(importantMessage);
+
             const newText = document.createElement('div');
             newText.classList.add('last-scene-text');
             newText.innerHTML = `
@@ -381,11 +386,6 @@
                 Or maybe—just maybe—I’ll let you keep your illusion of control, right up until the moment I decide to shatter it.
             `;
             document.body.appendChild(newText);
-
-            const importantMessage = document.createElement('div');
-            importantMessage.classList.add('important-message');
-            importantMessage.textContent = "I have every single one of your passwords";
-            document.body.appendChild(importantMessage);
 
             if (!lastSceneAudio.paused) {
                 lastSceneAudio.pause();
@@ -423,5 +423,3 @@
                 const y = event.clientY;
                 spawnSprinkles(x, y);
                 const randomImage = document.createElement('div');
-                randomImage.classList.add('random-image');
-                randomImage.style.backgroundImage = 'url(https://mypets
