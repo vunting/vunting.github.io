@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOM is Rich</title>
+    <title>discord.gg/cumgirl</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap');
@@ -110,7 +110,7 @@
         .sprinkles {
             position: absolute;
             font-size: 1rem;
-            color: #FF69B4;
+            color: white; /* Make sprinkles white at the start */
             opacity: 0;
             animation: sprinkleAnimation 1s ease-in-out forwards;
         }
@@ -213,6 +213,13 @@
         .bounce {
             animation: bounce 2s infinite;
         }
+        .moving-text {
+            position: absolute;
+            font-size: 2rem;
+            color: white;
+            font-weight: bold;
+            z-index: 30;
+        }
     </style>
 </head>
 <body>
@@ -238,17 +245,17 @@
         let wasPlaying = false;
 
         function moveElement(element) {
-            let x = Math.random() * (window.innerWidth - 100);
-            let y = Math.random() * (window.innerHeight - 100);
-            let dx = (Math.random() - 0.5) * 4;
-            let dy = (Math.random() - 0.5) * 4;
+            let x = Math.random() * window.innerWidth;
+            let y = Math.random() * window.innerHeight;
+            let dx = (Math.random() - 0.5) * 2;
+            let dy = (Math.random() - 0.5) * 2;
 
             function animate() {
                 x += dx;
                 y += dy;
 
-                if (x < 0 || x > window.innerWidth - 100) dx *= -1;
-                if (y < 0 || y > window.innerHeight - 100) dy *= -1;
+                if (x < 0 || x > window.innerWidth - element.offsetWidth) dx *= -1;
+                if (y < 0 || y > window.innerHeight - element.offsetHeight) dy *= -1;
 
                 element.style.left = `${x}px`;
                 element.style.top = `${y}px`;
@@ -317,12 +324,11 @@
             const timerOverlay = document.querySelector('.timer-overlay');
             const timer = document.querySelector('.timer');
             for (let i = 0; i < 5; i++) {
-                const backgroundText = document.createElement('div');
-                backgroundText.classList.add('background-text');
-                backgroundText.textContent = "discord.gg/cumgirl";
-                backgroundText.style.left = `${Math.random() * window.innerWidth}px`;
-                backgroundText.style.top = `${Math.random() * window.innerHeight}px`;
-                timerOverlay.appendChild(backgroundText);
+                const movingText = document.createElement('div');
+                movingText.classList.add('moving-text');
+                movingText.textContent = "discord.gg/cumgirl";
+                document.body.appendChild(movingText);
+                moveElement(movingText);
             }
             let timeLeft = 15;
             timerOverlay.style.display = 'flex';
