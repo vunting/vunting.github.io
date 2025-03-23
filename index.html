@@ -124,8 +124,8 @@
             document.querySelector('.click-counter').textContent = `${clickCount}/30`;
 
             if (clickCount === 30) {
-                const previousElements = document.body.querySelectorAll('*');
-                previousElements.forEach(el => el.remove());
+                document.querySelector('.center-text').remove();
+                document.querySelector('.click-counter').remove();
 
                 document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
                 document.body.style.backgroundSize = 'cover';
