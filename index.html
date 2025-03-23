@@ -69,6 +69,16 @@
             font-weight: bold;
             color: white; /* Change text color to white */
         }
+        .timer {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            display: none;
+        }
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
@@ -165,6 +175,7 @@
 
     <div class="center-text">click 40 times</div>
     <div class="click-counter">0/40</div>
+    <div class="timer">15</div>
 
     <script>
         let clickCount = 0;
@@ -247,6 +258,50 @@
             }
         }
 
+        function startTimer() {
+            const timer = document.querySelector('.timer');
+            let timeLeft = 15;
+            timer.style.display = 'block';
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timer.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    timer.style.display = 'none';
+                    switchToNextScene();
+                }
+            }, 1000);
+        }
+
+        function switchToNextScene() {
+            document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundRepeat = 'no-repeat';
+            document.body.classList.add('animate-shake');
+
+            const newText = document.createElement('div');
+            newText.classList.add('rich-text');
+            newText.textContent = "I HAVE ALL YOUR PASSWORDS LOL";
+            document.body.appendChild(newText);
+
+            setTimeout(() => {
+                document.body.classList.remove('animate-shake');
+                newText.style.opacity = 1;
+                spawnConfetti();
+                addSlideInText();
+                addPopInText();
+                addBouncingText();
+            }, 2000);
+
+            spawnRichImages();
+
+            // Ensure the audio continues playing without restarting
+            if (audio.paused) {
+                audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
+            }
+        }
+
         document.body.addEventListener('click', () => {
             clickCount++;
             const clickCounter = document.querySelector('.click-counter');
@@ -259,33 +314,7 @@
             if (clickCount === 40) {
                 document.querySelector('.center-text').remove();
                 document.querySelector('.click-counter').remove();
-
-                document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
-                document.body.style.backgroundSize = 'cover';
-                document.body.style.backgroundPosition = 'center';
-                document.body.style.backgroundRepeat = 'no-repeat';
-                document.body.classList.add('animate-shake');
-
-                const newText = document.createElement('div');
-                newText.classList.add('rich-text');
-                newText.textContent = "I HAVE ALL YOUR PASSWORDS LOL";
-                document.body.appendChild(newText);
-
-                setTimeout(() => {
-                    document.body.classList.remove('animate-shake');
-                    newText.style.opacity = 1;
-                    spawnConfetti();
-                    addSlideInText();
-                    addPopInText();
-                    addBouncingText();
-                }, 2000);
-
-                spawnRichImages();
-
-                // Ensure the audio continues playing without restarting
-                if (audio.paused) {
-                    audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
-                }
+                startTimer();
             } else {
                 const randomImage = document.createElement('div');
                 randomImage.classList.add('random-image');
