@@ -344,16 +344,36 @@
             document.body.classList.remove('animate-shake');
             document.body.innerHTML = ''; // Remove all other elements
 
+            const newText = document.createElement('div');
+            newText.classList.add('rich-text');
+            newText.style.position = 'absolute';
+            newText.style.bottom = '10px';
+            newText.style.left = '50%';
+            newText.style.transform = 'translateX(-50%)';
+            newText.style.color = 'gray';
+            newText.style.fontWeight = 'bold';
+            newText.style.textAlign = 'center';
+            newText.style.padding = '20px';
+            newText.style.width = '90%';
+            newText.style.maxWidth = '800px';
+            newText.innerHTML = `
+                I have everything. Every password, every account, every piece of your digital life resting in the palm of my hand like a delicate, trembling bird.
+                Your Instagram, where you post carefully curated snapshots of a life you want the world to envy. Your Snapchat, full of fleeting, reckless confessions, secrets shared in moments you thought would disappear but never truly do.
+                Your YouTube, your Discord, your email—I own them all now. I could become you, rewrite your reality, whisper in the ears of your friends and watch them turn their backs, send messages you’d never dream of writing, leave behind breadcrumbs of destruction in your name.
+                Bank accounts? Maybe. Private messages? Definitely. I could scroll through them for hours, peeling back the layers of your identity, learning what makes you tick, what makes you weak.
+                I could drop a single sentence to the wrong person, spark chaos like a match to dry grass, or sit silently in the shadows, watching you unravel under the weight of an invisible threat.
+                Do you feel it yet? That sinking dread, that clawing panic creeping up your spine as you realize the walls of your carefully constructed world aren’t as solid as you thought?
+                You always believed security was a given, that passwords were barriers, that your digital footprint was yours alone. But I’m here now.
+                A ghost in your machine, a shadow in your inbox, a presence lurking just beyond your notifications. Maybe I’ll toy with you for a while, drop hints, let paranoia sink its teeth in before I make my next move.
+                Or maybe—just maybe—I’ll let you keep your illusion of control, right up until the moment I decide to shatter it.
+            `;
+            document.body.appendChild(newText);
+
             if (!lastSceneAudio.paused) {
                 lastSceneAudio.pause();
                 lastSceneAudio.currentTime = 0;
             }
             lastSceneAudio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
-
-            // Ensure the audio continues playing without restarting
-            if (audio.paused) {
-                audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
-            }
         }
 
         function spawnSprinkles(x, y) {
@@ -394,41 +414,4 @@
 
                 const randomText = document.createElement('div');
                 randomText.classList.add('random-text');
-                randomText.textContent = "you're poor lol";
-                randomImage.appendChild(randomText);
-
-                randomText.style.display = 'flex';
-                randomText.style.alignItems = 'center';
-                randomText.style.justifyContent = 'center';
-                randomText.style.height = '100%';
-                randomText.style.width = '100%';
-
-                moveElement(randomImage);
-            }
-        });
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'hidden') {
-                if (!audio.paused) {
-                    wasPlaying = true;
-                    audio.pause();
-                } else {
-                    wasPlaying = false;
-                }
-            } else {
-                continueMusic();
-            }
-        });
-
-        document.addEventListener("click", () => {
-            if (audio.paused) {
-                audio.play().catch(error => console.log("Autoplay blocked:", error));
-            }
-        });
-
-        window.addEventListener("load", () => {
-            audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
-        });
-    </script>
-</body>
-</html>
+                random
