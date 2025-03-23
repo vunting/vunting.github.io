@@ -211,6 +211,28 @@
             font-weight: bold;
             z-index: 30;
         }
+        .last-scene-text {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+        }
+        .important-message {
+            position: absolute;
+            bottom: 100px; /* Adjust this value to move the text up or down */
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem; /* Adjust the font size as needed */
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -234,6 +256,7 @@
         let clickCount = 0;
         const audio = document.getElementById("background-music");
         const lastSceneAudio = new Audio("https://cdn.discordapp.com/attachments/1320108357780111431/1353197684151816222/youtube_AYpjZbD6IMo_audio.mp3?ex=67e0c70d&is=67df758d&hm=73ef954671971d484db91f4bc8971d9bbba48cb049df0cbf8a1f9281dfcf5b4a&");
+        lastSceneAudio.loop = true;
         let wasPlaying = false;
 
         function moveElement(element) {
@@ -344,16 +367,31 @@
             document.body.classList.remove('animate-shake');
             document.body.innerHTML = ''; // Remove all other elements
 
+            const newText = document.createElement('div');
+            newText.classList.add('last-scene-text');
+            newText.innerHTML = `
+                Every password, every account, every piece of your digital life resting in the palm of my hand like a delicate, trembling bird.
+                Your Instagram, where you post carefully curated snapshots of a life you want the world to envy. Your Snapchat, full of fleeting, reckless confessions, secrets shared in moments you thought would disappear but never truly do.
+                Your YouTube, your Discord, your email—I own them all now. I could become you, rewrite your reality, whisper in the ears of your friends and watch them turn their backs, send messages you’d never dream of writing, leave behind breadcrumbs of destruction in your name.
+                Bank accounts? Maybe. Private messages? Definitely. I could scroll through them for hours, peeling back the layers of your identity, learning what makes you tick, what makes you weak.
+                I could drop a single sentence to the wrong person, spark chaos like a match to dry grass, or sit silently in the shadows, watching you unravel under the weight of an invisible threat.
+                Do you feel it yet? That sinking dread, that clawing panic creeping up your spine as you realize the walls of your carefully constructed world aren’t as solid as you thought?
+                You always believed security was a given, that passwords were barriers, that your digital footprint was yours alone. But I’m here now.
+                A ghost in your machine, a shadow in your inbox, a presence lurking just beyond your notifications. Maybe I’ll toy with you for a while, drop hints, let paranoia sink its teeth in before I make my next move.
+                Or maybe—just maybe—I’ll let you keep your illusion of control, right up until the moment I decide to shatter it.
+            `;
+            document.body.appendChild(newText);
+
+            const importantMessage = document.createElement('div');
+            importantMessage.classList.add('important-message');
+            importantMessage.textContent = "I have every single one of your passwords";
+            document.body.appendChild(importantMessage);
+
             if (!lastSceneAudio.paused) {
                 lastSceneAudio.pause();
                 lastSceneAudio.currentTime = 0;
             }
             lastSceneAudio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
-
-            // Ensure the audio continues playing without restarting
-            if (audio.paused) {
-                audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
-            }
         }
 
         function spawnSprinkles(x, y) {
@@ -386,49 +424,4 @@
                 spawnSprinkles(x, y);
                 const randomImage = document.createElement('div');
                 randomImage.classList.add('random-image');
-                randomImage.style.backgroundImage = 'url(https://mypetsays.co.uk/cdn/shop/articles/interesting_facts_about_most_popular_dog_breeds.jpg?v=1632717550&width=1500)';
-                document.body.appendChild(randomImage);
-
-                randomImage.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
-                randomImage.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
-
-                const randomText = document.createElement('div');
-                randomText.classList.add('random-text');
-                randomText.textContent = "you're poor lol";
-                randomImage.appendChild(randomText);
-
-                randomText.style.display = 'flex';
-                randomText.style.alignItems = 'center';
-                randomText.style.justifyContent = 'center';
-                randomText.style.height = '100%';
-                randomText.style.width = '100%';
-
-                moveElement(randomImage);
-            }
-        });
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.visibilityState === 'hidden') {
-                if (!audio.paused) {
-                    wasPlaying = true;
-                    audio.pause();
-                } else {
-                    wasPlaying = false;
-                }
-            } else {
-                continueMusic();
-            }
-        });
-
-        document.addEventListener("click", () => {
-            if (audio.paused) {
-                audio.play().catch(error => console.log("Autoplay blocked:", error));
-            }
-        });
-
-        window.addEventListener("load", () => {
-            audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
-        });
-    </script>
-</body>
-</html>
+                randomImage.style.backgroundImage = 'url(https://mypets
