@@ -91,11 +91,13 @@
         .timer-circle {
             width: 150px;
             height: 150px;
-            border: 10px solid white;
+            border: 10px solid yellow;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: black;
+            z-index: 40;
         }
         .top-right-text {
             position: absolute;
@@ -111,6 +113,14 @@
             color: #FF69B4;
             opacity: 0;
             animation: sprinkleAnimation 1s ease-in-out forwards;
+        }
+        .background-text {
+            position: absolute;
+            color: white;
+            opacity: 0.1;
+            font-size: 2rem;
+            font-weight: bold;
+            z-index: 20;
         }
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.5); }
@@ -202,7 +212,7 @@
 </head>
 <body>
     <audio id="background-music" loop>
-        <source src="youtube_vs23rWUl2vo_audio.mp3" type="audio/mpeg">
+        <source src="https://cdn.discordapp.com/attachments/1320108357780111431/1353193691153567848/call_for_me_maybe.mp3?ex=67e0c355&is=67df71d5&hm=ed4dfb94fabd828f28a4ff0c7690e1cb6ee9d13112afa16f5978d4ef06e72e5c&" type="audio/mpeg">
     </audio>
 
     <div class="center-text">click 40 times</div>
@@ -211,6 +221,7 @@
         <div class="timer-circle">
             <span class="timer">15</span>
         </div>
+        <div class="background-text">discord.gg/cumgirl</div>
     </div>
     <div class="top-right-text">
         <p>discord.gg/cumgirl</p>
@@ -301,6 +312,14 @@
         function startTimer() {
             const timerOverlay = document.querySelector('.timer-overlay');
             const timer = document.querySelector('.timer');
+            for (let i = 0; i < 100; i++) {
+                const backgroundText = document.createElement('div');
+                backgroundText.classList.add('background-text');
+                backgroundText.textContent = "discord.gg/cumgirl";
+                backgroundText.style.left = `${Math.random() * window.innerWidth}px`;
+                backgroundText.style.top = `${Math.random() * window.innerHeight}px`;
+                timerOverlay.appendChild(backgroundText);
+            }
             let timeLeft = 15;
             timerOverlay.style.display = 'flex';
             timer.textContent = timeLeft;
