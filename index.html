@@ -113,12 +113,20 @@
             }
         }
 
+        function continueMusic() {
+            if (audio.paused && wasPlaying) {
+                audio.play().catch(error => console.log("Autoplay blocked:", error));
+            }
+        }
+
         document.body.addEventListener('click', () => {
             clickCount++;
             document.querySelector('.click-counter').textContent = `${clickCount}/30`;
 
             if (clickCount === 30) {
-                document.body.innerHTML = '';
+                const previousElements = document.body.querySelectorAll('*');
+                previousElements.forEach(el => el.remove());
+
                 document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
                 document.body.style.backgroundSize = 'cover';
                 document.body.style.backgroundPosition = 'center';
@@ -134,7 +142,7 @@
                 randomImage.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
 
                 const randomText = document.createElement('div');
-                randomText.classList.add('random-text', 'animate-fade-in');
+                randomText.classList.add('random-text');
                 randomText.textContent = "you're poor lol";
                 randomImage.appendChild(randomText);
 
@@ -156,8 +164,8 @@
                 } else {
                     wasPlaying = false;
                 }
-            } else if (wasPlaying) {
-                audio.play().catch(error => console.log("Autoplay blocked:", error));
+            } else {
+                continueMusic();
             }
         });
 
