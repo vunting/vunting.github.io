@@ -114,15 +114,6 @@
             opacity: 0;
             animation: sprinkleAnimation 1s ease-in-out forwards;
         }
-        .background-text {
-            position: absolute;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            z-index: 20;
-            opacity: 0.8;
-            animation: moveText 15s linear infinite;
-        }
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.5); }
             100% { opacity: 1; transform: scale(1); }
@@ -323,7 +314,7 @@
         function startTimer() {
             const timerOverlay = document.querySelector('.timer-overlay');
             const timer = document.querySelector('.timer');
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 15; i++) {
                 const movingText = document.createElement('div');
                 movingText.classList.add('moving-text');
                 movingText.textContent = "discord.gg/cumgirl";
