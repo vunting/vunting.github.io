@@ -10,7 +10,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://imgproxy.divecdn.com/t4roi_MYk_wt9i-yJEhTVcC3Gusxl9ZXdnUFYFoWU9k/g:ce/rs:fill:1200:675:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9tYWx3YXJlX25hbWVzLmpwZw==.webp');
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/21/1005/307/4k-dog-funny-animals-cookie-wallpaper-preview.jpg');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -26,6 +26,7 @@
             font-size: 1.5rem;
             color: black;
             font-weight: bold;
+            z-index: 20; /* Bring to front */
         }
         .random-text {
             position: absolute;
@@ -59,11 +60,13 @@
         }
         .click-counter {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 2rem;
             font-weight: bold;
             color: black;
+            animation: heartbeat 0.3s;
         }
         @keyframes fadeIn {
             0% { opacity: 0; transform: scale(0.5); }
@@ -94,6 +97,11 @@
             80% { transform: translate(-1px, -1px); }
             90% { transform: translate(1px, 2px); }
             100% { transform: translate(1px, -2px); }
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
         @keyframes confettiFall {
             0% { transform: translateY(-100vh); }
@@ -154,8 +162,8 @@
         <source src="youtube_vs23rWUl2vo_audio.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="center-text">click 30 times</div>
-    <div class="click-counter">0/30</div>
+    <div class="center-text">click 40 times</div>
+    <div class="click-counter">0/40</div>
 
     <script>
         let clickCount = 0;
@@ -240,9 +248,14 @@
 
         document.body.addEventListener('click', () => {
             clickCount++;
-            document.querySelector('.click-counter').textContent = `${clickCount}/30`;
+            const clickCounter = document.querySelector('.click-counter');
+            clickCounter.textContent = `${clickCount}/40`;
+            clickCounter.style.animation = 'heartbeat 0.3s';
+            setTimeout(() => {
+                clickCounter.style.animation = 'none';
+            }, 300);
 
-            if (clickCount === 30) {
+            if (clickCount === 40) {
                 document.querySelector('.center-text').remove();
                 document.querySelector('.click-counter').remove();
 
