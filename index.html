@@ -69,10 +69,11 @@
     <script>
         let clickCount = 0;
         const audio = document.getElementById("background-music");
+        let wasPlaying = false;
 
         function moveElement(element) {
-            let x = parseFloat(element.style.left) || 0;
-            let y = parseFloat(element.style.top) || 0;
+            let x = Math.random() * (window.innerWidth - 100);
+            let y = Math.random() * (window.innerHeight - 100);
             let dx = (Math.random() - 0.5) * 4;
             let dy = (Math.random() - 0.5) * 4;
 
@@ -99,11 +100,8 @@
                 richImage.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
                 document.body.appendChild(richImage);
 
-                const xRichImage = Math.random() * (window.innerWidth - 100);
-                const yRichImage = Math.random() * (window.innerHeight - 100);
-
-                richImage.style.left = `${xRichImage}px`;
-                richImage.style.top = `${yRichImage}px`;
+                richImage.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+                richImage.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
 
                 moveElement(richImage);
             }
@@ -111,7 +109,6 @@
 
         document.body.addEventListener('click', () => {
             clickCount++;
-
             document.querySelector('.click-counter').textContent = `${clickCount}/30`;
 
             if (clickCount === 30) {
@@ -127,11 +124,8 @@
                 randomImage.style.backgroundImage = 'url(https://mypetsays.co.uk/cdn/shop/articles/interesting_facts_about_most_popular_dog_breeds.jpg?v=1632717550&width=1500)';
                 document.body.appendChild(randomImage);
 
-                const xImage = Math.random() * (window.innerWidth - 100);
-                const yImage = Math.random() * (window.innerHeight - 100);
-
-                randomImage.style.left = `${xImage}px`;
-                randomImage.style.top = `${yImage}px`;
+                randomImage.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+                randomImage.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
 
                 const randomText = document.createElement('div');
                 randomText.classList.add('random-text');
@@ -150,30 +144,20 @@
 
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'hidden') {
-                document.body.innerHTML = '';
-
-                const richText = document.createElement('div');
-                richText.classList.add('rich-text');
-                richText.textContent = "you're actually rich";
-                document.body.appendChild(richText);
-
-                document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
-                document.body.style.backgroundSize = 'cover';
-                document.body.style.backgroundPosition = 'center';
-                document.body.style.backgroundRepeat = 'no-repeat';
-
-                spawnRichImages();
+                wasPlaying = !audio.paused; // Store whether music was playing
+            } else {
+                if (wasPlaying) {
+                    audio.play().catch(error => console.log("Autoplay blocked:", error));
+                }
             }
         });
 
-        // Autoplay workaround: Wait for user interaction
         document.addEventListener("click", () => {
             if (audio.paused) {
                 audio.play().catch(error => console.log("Autoplay blocked:", error));
             }
         });
 
-        // Try to play audio once page loads
         window.addEventListener("load", () => {
             audio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
         });
