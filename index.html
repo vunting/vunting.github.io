@@ -11,7 +11,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-image: url('https://media.discordapp.net/attachments/1320108357780111431/1353207544654467154/image.png?ex=67e0d03c&is=67df7ebc&hm=2b9a2e6cc1afeefd174d19090104bb9f45b813a519cb4abc0624ee33f812d252&');
+            background-image: url('https://wallpapercave.com/wp/wp3399369.jpg');
             background-size: cover;
             background-position: center;
             height: 100vh;
@@ -215,7 +215,7 @@
 </head>
 <body>
     <audio id="background-music" loop>
-        <source src="https://cdn.discordapp.com/attachments/1320108357780111431/1353197684151816222/youtube_AYpjZbD6IMo_audio.mp3?ex=67e0c70d&is=67df758d&hm=73ef954671971d484db91f4bc8971d9bbba48cb049df0cbf8a1f9281dfcf5b4a&" type="audio/mpeg">
+        <source src="https://cdn.discordapp.com/attachments/1320108357780111431/1353193691153567848/call_for_me_maybe.mp3?ex=67e0c355&is=67df71d5&hm=ed4dfb94fabd828f28a4ff0c7690e1cb6ee9d13112afa16f5978d4ef06e72e5c&" type="audio/mpeg">
     </audio>
 
     <div class="center-text">click 40 times</div>
@@ -233,6 +233,7 @@
     <script>
         let clickCount = 0;
         const audio = document.getElementById("background-music");
+        const lastSceneAudio = new Audio("https://cdn.discordapp.com/attachments/1320108357780111431/1353197684151816222/youtube_AYpjZbD6IMo_audio.mp3?ex=67e0c70d&is=67df758d&hm=73ef954671971d484db91f4bc8971d9bbba48cb049df0cbf8a1f9281dfcf5b4a&");
         let wasPlaying = false;
 
         function moveElement(element) {
@@ -336,27 +337,18 @@
         }
 
         function switchToNextScene() {
-            document.body.style.backgroundImage = 'url(https://media.discordapp.net/attachments/1320108357780111431/1353207544654467154/image.png?ex=67e0d03c&is=67df7ebc&hm=2b9a2e6cc1afeefd174d19090104bb9f45b813a519cb4abc0624ee33f812d252&)';
+            document.body.style.backgroundImage = 'url(https://media.discordapp.net/attachments/1320108357780111431/1353207544654467154/image.png?ex=67e0d03c&is=67df7ebc&hm=2b9a2e6cc1afeefd174d19090104bb9f45b813a519cb4abc0624ee33f812d252&=';
             document.body.style.backgroundSize = 'cover';
             document.body.style.backgroundPosition = 'center';
             document.body.style.backgroundRepeat = 'no-repeat';
-            document.body.classList.add('animate-shake');
+            document.body.classList.remove('animate-shake');
+            document.body.innerHTML = ''; // Remove all other elements
 
-            const newText = document.createElement('div');
-            newText.classList.add('rich-text');
-            newText.textContent = "I HAVE ALL YOUR PASSWORDS LOL";
-            document.body.appendChild(newText);
-
-            setTimeout(() => {
-                document.body.classList.remove('animate-shake');
-                newText.style.opacity = 1;
-                spawnConfetti();
-                addSlideInText();
-                addPopInText();
-                addBouncingText();
-            }, 2000);
-
-            spawnRichImages();
+            if (!lastSceneAudio.paused) {
+                lastSceneAudio.pause();
+                lastSceneAudio.currentTime = 0;
+            }
+            lastSceneAudio.play().catch(error => console.log("Autoplay might be blocked. Waiting for user interaction."));
 
             // Ensure the audio continues playing without restarting
             if (audio.paused) {
