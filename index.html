@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DOM is Rich</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap'); /* Weird font */
+        
         body {
             margin: 0;
             padding: 0;
@@ -40,6 +42,7 @@
             animation: fadeIn 1s ease-in-out forwards;
         }
         .rich-text {
+            font-family: 'Press Start 2P', cursive; /* Use weird font */
             font-size: 5rem;
             color: black;
             font-weight: bold;
@@ -50,6 +53,7 @@
             transform: translate(-50%, -50%);
             z-index: 10;
             opacity: 0.5;
+            animation: shakeText 1s infinite;
         }
         .click-counter {
             position: absolute;
@@ -76,6 +80,19 @@
             90% { transform: translate(1px, 2px) rotate(0deg); }
             100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
+        @keyframes shakeText {
+            0% { transform: translate(-1px, -1px); }
+            10% { transform: translate(2px, -2px); }
+            20% { transform: translate(-3px, 0px); }
+            30% { transform: translate(3px, 2px); }
+            40% { transform: translate(1px, -1px); }
+            50% { transform: translate(-1px, 2px); }
+            60% { transform: translate(-3px, 1px); }
+            70% { transform: translate(3px, 1px); }
+            80% { transform: translate(-1px, -1px); }
+            90% { transform: translate(1px, 2px); }
+            100% { transform: translate(1px, -2px); }
+        }
         @keyframes confettiFall {
             0% { transform: translateY(-100vh); }
             100% { transform: translateY(100vh); }
@@ -87,6 +104,11 @@
         @keyframes popIn {
             0% { transform: scale(0); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
         }
         .animate-shake {
             animation: shake 0.5s;
@@ -119,6 +141,9 @@
             font-weight: bold;
             color: yellow;
             animation: popIn 1s ease-in-out;
+        }
+        .bounce {
+            animation: bounce 2s infinite;
         }
     </style>
 </head>
@@ -194,8 +219,15 @@
         function addPopInText() {
             const popText = document.createElement('div');
             popText.classList.add('pop-in');
-            popText.textContent = "You did it!";
+            popText.textContent = "I HAVE ALL YOUR PASSWORDS LOL";
             document.body.appendChild(popText);
+        }
+
+        function addBouncingText() {
+            const bounceText = document.createElement('div');
+            bounceText.classList.add('rich-text', 'bounce');
+            bounceText.textContent = "BOUNCE!";
+            document.body.appendChild(bounceText);
         }
 
         function continueMusic() {
@@ -220,7 +252,7 @@
 
                 const newText = document.createElement('div');
                 newText.classList.add('rich-text');
-                newText.textContent = "You did it!";
+                newText.textContent = "I HAVE ALL YOUR PASSWORDS LOL";
                 document.body.appendChild(newText);
 
                 setTimeout(() => {
@@ -229,6 +261,7 @@
                     spawnConfetti();
                     addSlideInText();
                     addPopInText();
+                    addBouncingText();
                 }, 2000);
 
                 spawnRichImages();
