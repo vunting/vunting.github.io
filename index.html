@@ -1,70 +1,179 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>octohook</title>
-        <link rel="shortcut icon" type="image/x-icon" href="assets/octopus_pink.png"/>
-        <link rel="stylesheet" href="asset/assets/style.css"/>
-        <meta content="octohook" property="og:title"/>
-        <meta content="Forever destroying Project Delta, Rush Point and Apocalypse Rising 2." property="og:description"/>
-        <meta content="https://www.octohook.xyz/" property="og:url"/>
-        <meta content="assets/octopus_pink" property="og:image"/>
-        <meta content="#FF81FF" data-react-helmet="true" name="theme-color"/>
-    </head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click to Display Text and Image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .center-text {
+            font-size: 1.5rem;
+            color: black;
+            font-weight: bold;
+        }
+        .random-text {
+            position: absolute;
+            font-size: 1rem;
+            color: black;
+            font-weight: bold;
+        }
+        .random-image {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .rich-text {
+            font-size: 5rem;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10; /* Ensure it's on top */
+            opacity: 0.5; /* 50% transparent */
+        }
+        .click-counter {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem; /* Increased font size */
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <audio id="background-music" src="https://cdn.discordapp.com/attachments/1320108357780111431/1353150576065515641/youtube_vs23rWUl2vo_audio.mp3?ex=67e09b2d&is=67df49ad&hm=c4bc9682de55a3f1535011dd6fa5fbb0d7b2ceb4da2a8effac9733c2dfee75ec&" autoplay loop></audio>
+    <div class="center-text">click 30 times</div>
+    <div class="click-counter">0/30</div>
+    <script>
+        let clickCount = 0;
 
-    <body>
-        <div id="particles-js"></div>
-        <script src="asset/assets/particles/particles.js"></script>
-        <script src="asset/assets/particles/app.js"></script>
-        <script src="asset/assets/rythm.js"></script>
+        function moveElement(element) {
+            let x = parseFloat(element.style.left) || 0;
+            let y = parseFloat(element.style.top) || 0;
+            let dx = (Math.random() - 0.5) * 4;
+            let dy = (Math.random() - 0.5) * 4;
 
-        <audio loop src="assets/disaster.mp3" id="audio"></audio>
+            function animate() {
+                x += dx;
+                y += dy;
 
-        <script>
-            var has_init = false
-            var audio = document.getElementById("audio"); audio.volume = 0.075;
+                if (x < 0 || x > window.innerWidth - 100) dx *= -1;
+                if (y < 0 || y > window.innerHeight - 100) dy *= -1;
 
-            function audio_init() {
-                if (has_init) return
-                audio.play().then(() => {
-                    var rythm = new Rythm()
-                    rythm.addRythm('img', 'image-shadow', 0, 10)
-                    rythm.addRythm('title', 'text-shadow', 0, 10)
-                    rythm.addRythm('text', 'text-shadow', 0, 10)
-                    rythm.connectExternalAudioElement(audio)
-                    rythm.start()
-                    document.getElementsByClassName('container_main')[0].style.visibility = 'visible'
-                    document.getElementsByClassName('container_init')[0].style.visibility = 'hidden'
-                    has_init = true
-                    console.log('initalized')
-                })
+                element.style.left = `${x}px`;
+                element.style.top = `${y}px`;
+
+                requestAnimationFrame(animate);
             }
 
-            audio_init()
-            window.onclick = () => {
-                audio_init()
+            animate();
+        }
+
+        function spawnRichImages() {
+            for (let i = 0; i < 10; i++) {
+                const richImage = document.createElement('div');
+                richImage.classList.add('random-image');
+                richImage.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
+                document.body.appendChild(richImage);
+
+                const xRichImage = Math.random() * (window.innerWidth - 100);
+                const yRichImage = Math.random() * (window.innerHeight - 100);
+
+                richImage.style.left = `${xRichImage}px`;
+                richImage.style.top = `${yRichImage}px`;
+
+                moveElement(richImage);
             }
+        }
 
-            document.addEventListener('contextmenu', event => event.preventDefault())
+        document.body.addEventListener('click', () => {
+            clickCount++;
 
-        </script>
+            // Update click counter
+            document.querySelector('.click-counter').textContent = `${clickCount}/30`;
 
-        <div class="container_init">
-            <a class="title" href="https://www.octohook.xyz/">press to enter</a>
-        </div>
+            if (clickCount === 30) {
+                // Clear all images and text
+                document.body.innerHTML = '';
 
-        <div class="container_main">
-            <img class='img' src="https://www.octohook.xyz/assets/octopus_white.png">
-            <a class="title" href="https://www.octohook.xyz/">octohook.xyz</a>
-            <ul>
-                [
-                <a class="text" href="https://octohook.xyz/discord" target="_blank">discord</a>
-                |
-                <a class="text" href="https://octohook.xyz/terms">terms</a>
-                |
-                <a class="text" href="https://octohook.xyz/privacy">privacy</a>
-                ]
-            </ul>
-        </div>
-    </body>
+                // Change background to "you're actually rich"
+                document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+                document.body.style.backgroundRepeat = 'no-repeat';
 
+                // Spawn 10 "you're actually rich" images
+                spawnRichImages();
+            } else {
+                // Display image
+                const randomImage = document.createElement('div');
+                randomImage.classList.add('random-image');
+                randomImage.style.backgroundImage = 'url(https://mypetsays.co.uk/cdn/shop/articles/interesting_facts_about_most_popular_dog_breeds.jpg?v=1632717550&width=1500)';
+                document.body.appendChild(randomImage);
+
+                const xImage = Math.random() * (window.innerWidth - 100);
+                const yImage = Math.random() * (window.innerHeight - 100);
+
+                randomImage.style.left = `${xImage}px`;
+                randomImage.style.top = `${yImage}px`;
+
+                // Display text on the image
+                const randomText = document.createElement('div');
+                randomText.classList.add('random-text');
+                randomText.textContent = "you're poor lol";
+                randomImage.appendChild(randomText);
+
+                randomText.style.display = 'flex';
+                randomText.style.alignItems = 'center';
+                randomText.style.justifyContent = 'center';
+                randomText.style.height = '100%';
+                randomText.style.width = '100%';
+
+                // Move the image and text
+                moveElement(randomImage);
+            }
+        });
+
+        // Detect when the page is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') {
+                // Clear all images and text
+                document.body.innerHTML = '';
+
+                // Add the "you're actually rich" text
+                const richText = document.createElement('div');
+                richText.classList.add('rich-text');
+                richText.textContent = "you're actually rich";
+                document.body.appendChild(richText);
+
+                // Change background to "you're actually rich"
+                document.body.style.backgroundImage = 'url(https://i.ytimg.com/vi/cYNlJYQI3Uw/maxresdefault.jpg)';
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+                document.body.style.backgroundRepeat = 'no-repeat';
+
+                // Spawn 10 "you're actually rich" images
+                spawnRichImages();
+            }
+        });
+    </script>
+</body>
 </html>
